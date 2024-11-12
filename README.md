@@ -523,6 +523,7 @@ These enhancements, if implemented, could push the performance of the microproce
 - Immediate Data Extractor
 - Instruction Issuing Unit
 - Next PC Logic
+- Top Level Module
 - Testbench Development
 - Rigorous Simulation
 
