@@ -1,4 +1,4 @@
-# 8-bit Dual Pipeline Superscalar RISC-V Processor
+# 32-bit Dual Pipeline Superscalar RISC-V Processor
 
 ## Introduction
 
@@ -13,7 +13,7 @@ Our 8-bit dual-pipeline superscalar RISC-V microprocessor has been developed as 
 
 ## Features
 
-- **8-bit RISC-V ISA CPU Core**
+- **32-bit RISC-V ISA CPU Core**
 - **Dual-Issue Superscalar Architecture**
 - **5-Stage Pipeline: IF, ID, EX, MEM, WB**
 - **Harvard Architecture**
@@ -144,12 +144,12 @@ The microprocessor employs the Harvard architecture, featuring separate memories
 ### Data Memory
 
 - **Address Space**: 256x8
-- **Word Size**: 8-bit
+- **Word Size**: 32-bit
 - **Dual-Path Read and Write**: Supports simultaneous read and write operations on two different addresses (Dual-Port Memory).
 
 ## Register File
 
-- **Registers**: 32x8-bit
+- **Registers**: 32x32-bit
 - **Special Register**: `x0` is hardwired to zero.
 - **Supports Dual Write Ports**: Handles two sets of inputs for reading and writing to registers simultaneously.
 - **Priority Handling for Writes**: Prioritizes the second write operation (writedata_2) if both write requests target the same register.
