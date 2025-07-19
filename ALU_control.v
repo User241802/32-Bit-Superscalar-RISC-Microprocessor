@@ -29,7 +29,8 @@ module ALU_control(funct3,funct7,Op,ALUOp);
                     10'b0000001101: ALUOp = 5'b01110; // Unsigned Division
                     10'b0000001110: ALUOp = 5'b10011; // Signed Remainder
                     10'b0000001111: ALUOp = 5'b01111; // Unsigned Remainder
-                    10'b0100000101: ALUOp = 5'b01001; // Unsigned Remainder
+                    10'b0100000101: ALUOp = 5'b01001; // Arithmetic right shift
+                    
                    default: ALUOp = 5'b11111; // Default
                 endcase
             end
@@ -43,6 +44,13 @@ module ALU_control(funct3,funct7,Op,ALUOp);
                     3'b101: ALUOp = 5'b01000; // Immediate Logical Right Shift
                     3'b011: ALUOp = 5'b01010; // Immediate Set Less Than
                     3'b010: ALUOp = 5'b01011; // Immediate Set Less Than signed
+                   default: ALUOp = 5'b11111; // Default 
+                endcase
+                 case ({funct7, funct3})
+                 
+                    10'b0000000001: ALUOp = 5'b00111; // Immediate Logical Left Shift
+                    10'b0000000101: ALUOp = 5'b01000; // Immediate Logical Right Shift
+                    10'b0100000101: ALUOp = 5'b01001; // Immediate Arithmetic Right Shift
                    default: ALUOp = 5'b11111; // Default 
                 endcase
             end

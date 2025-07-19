@@ -3,10 +3,10 @@
 module branch_unit(input branch_in1,branch_in2,
 input [2:0] funct3_1,
 input [2:0] funct3_2,
-input [7:0] rd1_1,
-input [7:0] rd1_2,
-input [7:0] rd2_1,
-input [7:0] rd2_2,
+input [31:0] rd1_1,
+input [31:0] rd1_2,
+input [31:0] rd2_1,
+input [31:0] rd2_2,
 output reg branch1out, branch2out);
 
 always @(*)

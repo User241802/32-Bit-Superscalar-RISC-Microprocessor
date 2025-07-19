@@ -1,5 +1,4 @@
 module IF_ID(input clk,
-             input [7:0] pc_out, 
              input [31:0] instruction1,
              input [31:0] instruction2,
              input reset,

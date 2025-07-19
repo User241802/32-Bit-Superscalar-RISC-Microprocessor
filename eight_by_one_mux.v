@@ -1,16 +1,16 @@
 `timescale 1ns / 1ps
 
-module eight_by_one_mux(input [7:0] a,
-                        input [7:0] b,
-                        input [7:0] c,
-                        input [7:0] d,
-                        input [7:0] e,
-                        input [7:0] f,
-                        input [7:0] g,
+module eight_by_one_mux(input [31:0] a,
+                        input [31:0] b,
+                        input [31:0] c,
+                        input [31:0] d,
+                        input [31:0] e,
+                        input [31:0] f,
+                        input [31:0] g,
                         
                         input [2:0] s,
                         
-                        output reg [7:0] o
+                        output reg [31:0] o
                         );
                         
 always @ (*)

@@ -8,7 +8,7 @@ module CCT (
     input rollback,
     input branch1,
     input branch2,
-    input [7:0] immdata 
+    input [31:0] immdata 
 );
     wire [7:0] next_pc;
 
@@ -46,7 +46,7 @@ module NextPCLogic (
     output reg [7:0] next_pc,
     input wire branch1,
     input wire branch2,
-    input wire signed [7:0] immdata
+    input wire signed [31:0] immdata
 );
 
      always @(*) begin
@@ -56,9 +56,9 @@ module NextPCLogic (
             if (rollback) begin
                 next_pc <= current_pc + 4;
             end else if (branch1) begin
-                next_pc <= current_pc + (immdata * 4);
+                next_pc <= current_pc + (immdata[7:0] * 4);
             end else if (branch2) begin
-                next_pc <= current_pc + (immdata * 4) + 4;
+                next_pc <= current_pc + (immdata[7:0] * 4) + 4;
             end else begin
                 next_pc <= current_pc + 8;
             end

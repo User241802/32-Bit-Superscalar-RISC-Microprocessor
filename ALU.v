@@ -1,22 +1,19 @@
 `timescale 1ns / 1ps
 
-module ALU(A, B,oper,R,flag);
-input [7:0] A, B;                
-    input [4:0] oper;          
-    reg carry;
-    wire overflow;
-    output reg [7:0] R;        
-    reg [15:0] mul_res;       
-    output  [7:0]flag;
+module ALU(A, B,oper,R);
+input [31:0] A, B;                
+input [4:0] oper;          
+
+    output reg [31:0] R;        
+    reg [63:0] mul_res;       
     
-     flagreg F(A,B,oper,R,carry,flag,overflow);  
-   
+    
 
     always @* begin
         case (oper)
             
-            5'b00000 : {carry,R} = A + B;                // unsigned addition
-            5'b00001 : {carry,R} = A - B;                // unsigned subtraction
+            5'b00000 : R = A + B;                // unsigned addition
+            5'b00001 : R = A - B;                // unsigned subtraction
             5'b00010 :   begin
              R = $signed(A) + $signed(B);
              end                     // signed addition
@@ -38,22 +35,22 @@ input [7:0] A, B;
             
             5'b01100 : begin                       // MUL LSB
                 mul_res = $signed( A) *$signed(B);
-                R = mul_res[7:0];
+                R = mul_res[31:0];
             end
             5'b01101 : begin                       // MUL MSB
                 mul_res = $signed( A) *$signed(B);
-                R = mul_res[15:8];
+                R = mul_res[63:32];
             end
             5'b01110 : begin
             if (B==0)
-            R=8'b11111111;
+            R=32'b11111111111111111111111111111111;
             else
              R = A / B;
              end                // unsigned division
 
             5'b01111 : begin
             if (B==0)
-            R=8'b0;
+            R=32'b0;
             else
              R = A % B;
              end                           // unsigned remainder
@@ -67,11 +64,11 @@ input [7:0] A, B;
             
             5'b10001 : begin                       // MUL MSB(signed)
                 mul_res = A * B;
-                R = mul_res[15:8];
+                R = mul_res[63:32];
             end
              5'b10100 : begin                       // MUL MSB(signed)
                 mul_res =$signed( A) *(B);
-                R = mul_res[15:8];
+                R = mul_res[63:32];
             end
             
              5'b10010 : begin
@@ -87,7 +84,7 @@ input [7:0] A, B;
             R =$signed( A )% $signed( B);  end                // signed remainder
                  // signed remainder
             
-            default : R = 8'b0;                     // default case
+            default : R = 32'b0;                     // default case
         endcase
        
           
