@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 module InstructionIssuingUnit (
     input wire clk,
     input wire rst,
@@ -9,12 +10,6 @@ module InstructionIssuingUnit (
 );
     reg [31:0] hold_instr;
     reg has_dependency;
-    integer cycle_count;  // Counter for clock cycles
-
-    // Initialize the counter
-    initial begin
-        cycle_count = 0;
-    end
 
     always @(posedge clk or posedge rst) begin
         if (rst) begin
@@ -23,7 +18,6 @@ module InstructionIssuingUnit (
             hold_instr <= 32'b0;
             rollback <= 1'b0;
             has_dependency <= 1'b0;
-            cycle_count <= 0;  // Reset cycle count on reset
         end else begin
             // Dependency check (simplified example)
             if (instr1[11:7] == instr2[19:15] || instr1[11:7] == instr2[24:20] || instr1[6:0]==7'b1100011) begin
@@ -43,8 +37,7 @@ module InstructionIssuingUnit (
                 rollback <= 1'b0;
             end
 
-            // Increment the clock cycle counter
-            cycle_count <= cycle_count + 1;
+          
         end
     end
 

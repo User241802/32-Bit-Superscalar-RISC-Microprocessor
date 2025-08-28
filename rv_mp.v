@@ -1,8 +1,16 @@
-module rv_mp(clk,reset);
+`timescale 1ns / 1ps
+module rv_mp(clk,reset,debug_mem_readdata_1,debug_mem_readdata_2,debug_alu_result_1,debug_alu_result_2,debug_rf_writedata_1,debug_rf_writedata_2 );
 
   
     input clk;
     input reset;
+    output [31:0]debug_mem_readdata_1;
+    output [31:0]debug_mem_readdata_2;
+    output [31:0]debug_alu_result_1;
+    output [31:0]debug_alu_result_2;
+    output [31:0]debug_rf_writedata_1;
+    output [31:0]debug_rf_writedata_2;
+    
     wire [31:0] instruction1;    // instruction memory outputs
     wire [31:0] instruction2;
     
@@ -375,5 +383,10 @@ eight_by_one_mux ebm2_1(idex_readdata2_1,
                         fb1,
                         outb1);
 
-
+assign debug_mem_readdata_1 = readdata_1;
+assign debug_mem_readdata_2 = readdata_2;   
+assign debug_alu_result_1 =result_alu_1;  
+assign debug_alu_result_2 =result_alu_2;  
+assign debug_rf_writedata_1=writedata_1;  
+assign debug_rf_writedata_2=writedata_2;
 endmodule

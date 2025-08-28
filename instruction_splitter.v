@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 module instruction_splitter(
   input [31:0] instruction,
   output [6:0] opcode,

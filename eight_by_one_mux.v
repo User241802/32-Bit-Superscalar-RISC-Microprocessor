@@ -23,6 +23,8 @@ always @ (*)
    3'b100: o=e;
    3'b101: o=f;
    3'b110: o=g;
+  default: o=32'b0;
   endcase
+
  end
 endmodule

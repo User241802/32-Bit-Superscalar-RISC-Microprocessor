@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 module instruc_mem(
     input [7:0] inst_address,
     output reg [31:0] instruction1,

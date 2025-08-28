@@ -26,23 +26,9 @@ module registerFile(
     output reg [31:0] writedata_out_2,
     output reg reg_write_out_2
 );
-    integer i;
-    reg [31:0] registers [31:0];
-    integer file;  // File descriptor
-    reg first_write;  // Flag to indicate first write
-
-    // Initialize registers and the first_write flag
-    initial begin
-        for (i = 0; i < 32; i = i + 1) begin
-            registers[i] = 32'd0;
-        end
-        first_write = 1;
-    end
+    reg [31:0] registers [0:31];
     
-    // Ensure register 0 is always zero
-    always @(*) begin
-        registers[0] = 32'd0;
-    end
+    integer i;
 
     // Read Data Logic
     always @(*) begin
@@ -52,29 +38,10 @@ module registerFile(
             readdata1_2 = 32'd0;
             readdata2_2 = 32'd0;
         end else begin
-            if (rd_1 == rs1_1) begin
-                readdata1_1 = (reg_write_1) ? writedata_1 : registers[rs1_1];
-            end else begin
-                readdata1_1 = registers[rs1_1];
-            end
-
-            if (rd_1 == rs2_1) begin
-                readdata2_1 = (reg_write_1) ? writedata_1 : registers[rs2_1];
-            end else begin
-                readdata2_1 = registers[rs2_1];
-            end
-
-            if (rd_2 == rs1_2) begin
-                readdata1_2 = (reg_write_2) ? writedata_2 : registers[rs1_2];
-            end else begin
-                readdata1_2 = registers[rs1_2];
-            end
-
-            if (rd_2 == rs2_2) begin
-                readdata2_2 = (reg_write_2) ? writedata_2 : registers[rs2_2];
-            end else begin
-                readdata2_2 = registers[rs2_2];
-            end
+            readdata1_1 = registers[rs1_1];
+            readdata2_1 = registers[rs2_1];
+            readdata1_2 = registers[rs1_2];
+            readdata2_2 = registers[rs2_2];
         end
     end
 
@@ -82,14 +49,14 @@ module registerFile(
     always @(posedge clk) begin
         if (reset) begin
             // Reset registers to default state if reset is asserted
-            for (i = 0; i < 32; i = i + 1) begin
+            for (i = 1; i < 32; i = i + 1) begin
                 registers[i] <= 32'd0;  // Set to 32-bit width
             end
             rd_out_1 <= 5'd0;
-            writedata_out_1 <= 32'd0;  // Set to 32-bit width
+            writedata_out_1 <= 32'd0;
             reg_write_out_1 <= 1'b0;
             rd_out_2 <= 5'd0;
-            writedata_out_2 <= 32'd0;  // Set to 32-bit width
+            writedata_out_2 <= 32'd0;
             reg_write_out_2 <= 1'b0;
         end else begin
             // Write handling with priority to the second write
@@ -105,27 +72,6 @@ module registerFile(
                 writedata_out_1 <= writedata_1;
                 reg_write_out_1 <= reg_write_1;
             end
-        end
-    end
-
-    // Write the contents of the register file to a text file
-    always @(*) begin
-        // Open file in write mode
-        file = $fopen("register_contents.txt", "w");
-        if (file) begin
-            if (first_write) begin
-                // Write headers to the file
-                $fwrite(file, "%-10s %-10s %-10s\n", "regno.", "value", "deci");
-                first_write = 0;  // Set flag to false after writing headers
-            end
-            for (i = 0; i < 32; i = i + 1) begin
-                // Write register number, binary value, and signed decimal value to the file
-                $fwrite(file, "%-10d %-10b (%d)\n", i, registers[i], $signed(registers[i]));
-            end
-            // Close the file
-            $fclose(file);
-        end else begin
-            $display("Error: Could not open file for writing.");
         end
     end
 

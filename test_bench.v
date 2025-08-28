@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 module test_bench();
 
   
@@ -380,6 +381,7 @@ eight_by_one_mux ebm2_1(idex_readdata2_1,
     // Generate clock signal
    
     always #5 clk = ~clk;
+    
     
     initial begin
         

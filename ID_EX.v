@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 module ID_EX(
     input clk, reset,
     input memwrite_in1, memread_in1, memtoreg_in1, Alusrc_in1, regwrite_in1, // from CU
